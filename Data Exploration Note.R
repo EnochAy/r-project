@@ -48,15 +48,15 @@ cbind(freq=table(x), percentage=prop.table(table(x))*100)
 #corrections:
 #Discrete age  is represented as categorical data, a factor
 #Point one
-#Checking the Age and tenure variables distributions in the train dataset
-#skewness: measure of asymmetry of distribution, i.e deviation from normal
-#bell-shaped distribution, positive: right side is longer, otherwise, negative.
+#Checking the Age and tenure variables distributions in the training dataset
+#skewness: a measure of the asymmetry of distribution, i.e deviation from normal
+#bell-shaped distribution, positive: the right side is longer, otherwise, negative.
 #The mean of a positive skew > the median, opp in negative skewness.
 #The more skewed the data, the less accurate the model will be.
 #To deal with skewness, use;
 #Binning (Also called quantization): This used for transforming continuous
 #numeric features into discrete ones(categories), e.g the age. The numbers are
-# considered as caegories or bins into which the continuos values are binned or
+# considered as categories or bins into which the continuous values are binned or
 # grouped
 #
 #
@@ -155,7 +155,7 @@ train_D <- discretizeDF(train, methods = list(Age = "frequency", breaks = 2,
                         default = list(method = "none"))
 
 
-#Transformation
+#Initail Data Exploration 
 head(train)
 tail(train)
 summary(train)
@@ -182,10 +182,10 @@ skew <- apply(train[, 1:29], 2, skew)
 
 #Point two:
 # the geographic remoteness of different postcodes may be used as an indicator
-# of proximity to consider to whether a customer is in need of a bike to ride
+# of proximity to consider whether a customer needs a bike to ride
 # to work from the ABS data  at different geographic levels thus creating
 # additional features for the model.
-# Task: To create additional feature for the model (name?)
+# Task: To create an additional feature for the model (name?)
 
 # Point three:
 # Exploration of interactions between different variables through correlation
@@ -243,10 +243,10 @@ predictRaw(55, 4.5, model$coefficients, minRaw = 0, maxRaw = 28)
 #sample estimates:
 #       cor
 #-0.3618708
-#This result shows a negative cor, meaning that increase in age implies
+#This result shows a negative cor, meaning that an increase in age implies
 #reduction in tenure, which reasonable.
 #  Point four:
-#transformation of required data  ensuring that the data types are appropriate
+#transformation of required data ensuring that the data types are appropriate
 #and rolling data up to an aggregated level. Or, joining in already aggregated
 #ABS data at a geographic level to create additional variables.
 #
@@ -351,7 +351,7 @@ full["order_status"] <- lapply(full["order_status"], factor, levels = c("Cancell
 
 full["wealth_segment"] <- lapply(full["wealth_segment"], factor, levels = c("Mass Customer", "Affluent Customer", "High Net Worth"), label = c(0,1,2))
 
-#Exploring Data sets
+#Further Data Exploration
 str(full)
 #21510 obs. of  37 variables
 str(train)
@@ -476,7 +476,6 @@ mean(full, na.rm = TRUE)
 str(full)
 
 #saving data in the current working directory
-#Couldn't locate it yet??
 full_Data  <- tempfile("full", fileext = ".rds")
 saveRDS(full, full_Data)
 readRDS(full_Data)
